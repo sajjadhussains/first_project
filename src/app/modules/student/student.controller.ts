@@ -12,8 +12,12 @@ const createStudent = async (req: Request, res: Response) => {
       message: "Student is created successfully",
       data: result,
     });
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    res.status(200).json({
+      success: false,
+      message: "first Name can not contain more than 20 characters",
+      error: err,
+    });
   }
 };
 
