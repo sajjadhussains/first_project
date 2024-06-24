@@ -1,5 +1,5 @@
 const Joi = require("joi");
-import default from './../../config/index';
+// import default from './../../config/index';
 
 const studentValidationSchema = Joi.object({
   id: Joi.string().required().messages({
@@ -90,7 +90,7 @@ const studentValidationSchema = Joi.object({
   }).required(),
   profileImg: Joi.string(),
   isActive: Joi.string().valid("active", "blocked").default("active"),
-  isDeleted:Joi.boolean().default(false),
+  isDeleted: Joi.boolean().default(false),
 });
 
 export default studentValidationSchema;
