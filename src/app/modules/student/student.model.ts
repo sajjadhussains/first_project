@@ -1,5 +1,5 @@
 import { Schema, model, connect } from "mongoose";
-const validator = require("validator");
+import validator = require("validator");
 const bcrypt = require("bcrypt");
 
 import {
@@ -82,10 +82,11 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       required: [true, "id should be unique"],
       unique: true,
     },
-    password: {
-      type: String,
-      required: [true, "id should be unique"],
-      maxlength: [20, "password can't more than 20 characters"],
+    user: {
+      type: Schema.Types.ObjectId,
+      required: [true, "User id is required"],
+      unique: true,
+      ref: "User",
     },
     name: {
       type: userSchema,
@@ -119,11 +120,6 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     guardian: guardianSchema,
     localGuardian: localGuardianSchema,
     profileImg: { type: String },
-    isActive: {
-      type: String,
-      enum: ["active", "blocked"],
-      default: "active",
-    },
     isDeleted: {
       type: Boolean,
       default: false,
@@ -139,22 +135,6 @@ const studentSchema = new Schema<TStudent, StudentModel>(
 //virtuals
 studentSchema.virtual("fullName").get(function () {
   return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`;
-});
-
-//pre save middleware/hook:will work on create() save()
-studentSchema.pre("save", async function (next) {
-  const user = this;
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.bcrypt_salt_rounds)
-  );
-  next();
-});
-
-studentSchema.post("save", function (doc, next) {
-  doc.password = "";
-  console.log("password hashed already");
-  next();
 });
 
 //query middleware
