@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 
 export interface TGuardian {
   fatherName: string;
@@ -21,6 +21,7 @@ export interface TLocalGuardian {
 }
 export interface TStudent {
   id: string;
+  user: Types.ObjectId;
   password: string;
   name: TUserName;
   gender: "male" | "female" | "other";
@@ -34,7 +35,6 @@ export interface TStudent {
   guardian: TGuardian;
   localGuardian: TLocalGuardian;
   profileImg?: string;
-  active: "active" | "blocked";
   isDeleted: boolean;
 }
 export interface StudentModel extends Model<TStudent> {

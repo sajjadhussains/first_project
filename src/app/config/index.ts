@@ -8,4 +8,5 @@ export default {
   database_url:
     process.env.DATABASE_URL || "mongodb://localhost:27017/first_project",
   bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
+  default_pass: process.env.DEFAULT_PASS,
 };

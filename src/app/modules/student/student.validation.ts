@@ -45,7 +45,7 @@ const StudentValidationSchema = z.object({
   guardian: GuardianValidationSchema,
   localGuardian: LocalGuardianValidationSchema,
   profileImg: z.string().optional(), // if it's a URL to image
-  active: z.enum(["active", "blocked"]).default("active"),
+  // active: z.enum(["active", "blocked"]).default("active"),
   isDeleted: z.boolean(),
 });
 
