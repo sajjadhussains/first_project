@@ -8,8 +8,8 @@ import {
 } from "./student.interface";
 
 import validator from "validator";
-import bcrypt from "bcrypt";
-import config from "../../config";
+// import bcrypt from "bcrypt";
+// import config from "../../config";
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -93,11 +93,11 @@ const studentSchema = new Schema<TStudent>(
       type: Schema.Types.ObjectId,
       required: [true, "Object Id is required"],
     },
-    password: {
-      type: String,
-      required: [true, "password is required"],
-      maxLength: [20, "password can not be more than 20 characters"],
-    },
+    // password: {
+    //   type: String,
+    //   required: [true, "password is required"],
+    //   maxLength: [20, "password can not be more than 20 characters"],
+    // },
     name: {
       type: userNameSchema,
       required: [true, "Student Name is required"],
@@ -166,21 +166,6 @@ const studentSchema = new Schema<TStudent>(
 //mongoose virtuals
 studentSchema.virtual("fullName").get(function () {
   return `${this.name.firstName}  ${this.name.middleName} ${this.name.lastName}`;
-});
-
-studentSchema.pre("save", async function (next) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this;
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.bcrypt_salt_rounds)
-  );
-  next();
-});
-
-studentSchema.post("save", function (doc, next) {
-  doc.password = "";
-  next();
 });
 
 //query middleware
