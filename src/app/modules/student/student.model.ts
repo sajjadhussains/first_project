@@ -84,6 +84,11 @@ const localGuardianSchema = new Schema<TLocalGuardian>({
 
 const studentSchema = new Schema<TStudent>(
   {
+    id: {
+      type: String,
+      required: [true, "ID is required"],
+      unique: true,
+    },
     user: {
       type: Schema.Types.ObjectId,
       required: [true, "Object Id is required"],
@@ -116,6 +121,7 @@ const studentSchema = new Schema<TStudent>(
         validator: (value: string) => validator.isEmail(value),
         message: "Email is not correct format",
       },
+      unique: true,
     },
     contactNo: { type: String, required: [true, "Contact No is required"] },
     emergencyContactNo: {
@@ -144,6 +150,10 @@ const studentSchema = new Schema<TStudent>(
     localGuardian: {
       type: localGuardianSchema,
       required: [true, "Local Guardian information is required"],
+    },
+    admissionSemester: {
+      type: Schema.Types.ObjectId,
+      ref: "AcademicSemester",
     },
     profileImg: { type: String },
   },
