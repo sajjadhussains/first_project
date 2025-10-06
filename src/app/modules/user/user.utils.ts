@@ -3,9 +3,10 @@ import { User } from "./user.model";
 //find last studentId
 const findLastStudentId = async () => {
   const lastStudent = await User.findOne({ role: "student" }, { id: 1, _id: 0 })
-    .sort({ createdAt: -1 })
+    .sort({ createdAt: -1 }) // newest first
     .lean();
-  return lastStudent?.id ? lastStudent.id.substring(6) : undefined;
+
+  return lastStudent?.id; // return full ID like "2030020001"
 };
 //year semesterCode 4digit number
 export const generateStudentId = async (payload: TAcademicSemester) => {
@@ -25,5 +26,6 @@ export const generateStudentId = async (payload: TAcademicSemester) => {
   }
   let incrementId = (Number(currentId) + 1).toString().padStart(4, "0");
   incrementId = `${payload.year}${payload.code}${incrementId}`;
+  console.log("this is increment id", incrementId);
   return incrementId;
 };
