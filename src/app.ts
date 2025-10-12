@@ -13,9 +13,14 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/v1", router);
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
-});
+const test = async (req: Request, res: Response) => {
+  Promise.reject();
+  // res.send(req);
+};
+app.get("/", test);
+// app.get("/", (req: Request, res: Response) => {
+//   res.send("Hello World!");
+// });
 
 app.use(globalErrorHandler);
 app.use(notFound);
